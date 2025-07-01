@@ -450,6 +450,11 @@
 					<artifactId>maven-enforcer-plugin</artifactId>
 					<version>3.5.0</version>
 				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>exec-maven-plugin</artifactId>
+					<version>3.5.0</version>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 		<plugins>
@@ -564,6 +569,66 @@
 			<properties>
 				<maven.compiler.release>8</maven.compiler.release>
 			</properties>
+		</profile>
+		<profile>
+			<id>full-build</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>install-codegen-first</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>mvn</executable>
+									<arguments>
+										<argument>-pl</argument>
+										<argument>quickfixj-codegenerator</argument>
+										<argument>install</argument>
+										<argument>-DskipTests</argument>
+									</arguments>
+								</configuration>
+							</execution>
+							<execution>
+								<id>install-orchestration-second</id>
+								<phase>initialize</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>mvn</executable>
+									<arguments>
+										<argument>-pl</argument>
+										<argument>quickfixj-orchestration</argument>
+										<argument>install</argument>
+									</arguments>
+								</configuration>
+							</execution>
+							<execution>
+								<id>install-all-modules</id>
+								<phase>compile</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>mvn</executable>
+									<arguments>
+										<argument>install</argument>
+									</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
 		</profile>
 	</profiles>
 	<distributionManagement>

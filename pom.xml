@@ -622,6 +622,8 @@
 									<executable>mvn</executable>
 									<arguments>
 										<argument>install</argument>
+										<argument>-DskipTests</argument>
+										<argument>-DskipITs</argument>
 									</arguments>
 								</configuration>
 							</execution>

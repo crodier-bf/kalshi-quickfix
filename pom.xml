@@ -3,7 +3,7 @@
 
 	<groupId>org.quickfixj</groupId>
 	<artifactId>quickfixj-parent</artifactId>
-	<version>3.0.0-SNAPSHOT</version>
+	<version>4.0.0</version>
 	<packaging>pom</packaging>
 
 	<name>QuickFIX/J Parent</name>
@@ -103,6 +103,12 @@
 		<org.quickfixj.orchestra.tools.version>1.0.2</org.quickfixj.orchestra.tools.version>
 		<jaxen.version>2.0.0</jaxen.version>
                 <jmh.version>1.37</jmh.version>
+		<!-- Skip tests by default for install and package -->
+		<maven.test.skip>true</maven.test.skip>
+		<skipTests>true</skipTests>
+		<skipITs>true</skipITs>
+		<!-- Skip javadoc generation -->
+		<maven.javadoc.skip>true</maven.javadoc.skip>
 	</properties>
 
    <dependencyManagement>
@@ -516,11 +522,7 @@
 					<plugin>
 						<groupId>org.apache.felix</groupId>
 						<artifactId>maven-bundle-plugin</artifactId>
-						<executions>
-							<execution>
-								<phase/>
-							</execution>
-						</executions>
+
 					</plugin>
 				</plugins>
 			</build>
@@ -633,16 +635,26 @@
 			</build>
 		</profile>
 	</profiles>
+
 	<distributionManagement>
-		<snapshotRepository>
-			<id>github</id>
-			<name>GitHub Packages - Snapshots</name>
-			<url>https://maven.pkg.github.com/quickfix-j/quickfixj</url>
-		</snapshotRepository>
 		<repository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+			<id>github</id>
+			<name>exchange-quickfixj</name>
+			<url>https://maven.pkg.github.com/fanatics-gaming/exchange-quickfixj</url>
 		</repository>
 	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/fanatics-gaming/*</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 </project>

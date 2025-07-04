@@ -1,0 +1,23 @@
+---
+name: Push
+run-name: ➡️ ${{ github.ref }} - ${{ github.event_name }} (${{ github.event.action }})
+
+on:
+  push:
+    branches: [main, hotfix/*]
+    tags: '*'
+  workflow_dispatch:
+  pull_request:
+    branches: [main, hotfix/*]
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  id-token: write
+  contents: write
+  packages: read
+  pull-requests: write
+
+jobs:
+  push:
+    uses: fanatics-gaming/actions/.github/workflows/mvn_lib_push.yaml@v1
+    secrets: inherit
